@@ -1,4 +1,3 @@
-# dictionary imported from https://greenteapress.com/thinkpython2/code/words.txt\
 import os
 
 exit, dictionary = 'y', []
@@ -8,10 +7,12 @@ with open(os.path.dirname(os.path.abspath(__file__)) + '/dictionary.txt') as fil
     file.close()
 
 while exit.lower() == 'y':
-    print('OPTIONS------------------------------')
+    print('OPTIONS------------------------------------------')
     print('1. List all palindromes in dictionary')
-    print('2. List all words that are palingrams')
+    print('2. List all words that are also 2-word palingrams')
     print('3. List two words that are palingrams')
+    print('4. List all semordnilaps')
+    print('5. (Temporary) correct formatting on dicitonary.txt')
     print()
     choice = input('Enter choice: ')
 
@@ -21,10 +22,29 @@ while exit.lower() == 'y':
                 print(word)
 
     elif choice == '2':
-        print('2')
         for word in dictionary:
-            idx = 1
-            while idx < len(word):
+            if len(word) > 3:
+                palindrome, palingram, current_index = word[::-1], "", 1
+                for character in palindrome:
+                    palingram = palingram + character
+                    if len(palingram) > current_index:
+                        first_word, second_word = palingram, palindrome[len(palingram):len(word)]
+                        for first_word_check_entry in dictionary:
+                            if first_word_check_entry == first_word:
+                                for second_word_check_entry in dictionary:
+                                    if second_word_check_entry == second_word:
+                                        print(word + ' -> ' + first_word + ' ' + second_word)
+                        current_index = current_index + 1
+    
+    elif choice == '3':
+        
+
+    elif choice == '4':
+        for word in dictionary:
+            for semordnilap in dictionary:
+                if word[::-1] == semordnilap and word != semordnilap:
+                    print(word + ' -> ' + semordnilap)
+                    break
                 
 
     else:
